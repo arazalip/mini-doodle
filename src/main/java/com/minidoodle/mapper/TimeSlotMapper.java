@@ -3,6 +3,7 @@ package com.minidoodle.mapper;
 import com.minidoodle.dto.TimeSlotDTO;
 import com.minidoodle.model.TimeSlot;
 import com.minidoodle.model.User;
+import com.minidoodle.model.Meeting;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -33,6 +34,18 @@ public class TimeSlotMapper {
         timeSlot.setEndTime(dto.getEndTime().atZone(ZoneId.systemDefault()).toInstant());
         timeSlot.setStatus(dto.getStatus());
         return timeSlot;
+    }
+
+    public void updateEntity(TimeSlot timeSlot, TimeSlotDTO dto, Meeting meeting) {
+        if (timeSlot == null || dto == null) return;
+
+        timeSlot.setStartTime(dto.getStartTime().atZone(ZoneId.systemDefault()).toInstant());
+        timeSlot.setEndTime(dto.getEndTime().atZone(ZoneId.systemDefault()).toInstant());
+        timeSlot.setStatus(dto.getStatus());
+
+        if (meeting != null) {
+            timeSlot.setMeeting(meeting);
+        }
     }
 
     public static Instant toInstant(LocalDateTime localDateTime) {

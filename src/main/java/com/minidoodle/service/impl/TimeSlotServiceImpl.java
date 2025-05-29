@@ -1,6 +1,7 @@
 package com.minidoodle.service.impl;
 
 import com.minidoodle.dto.TimeSlotDTO;
+import com.minidoodle.exception.TimeSlotException;
 import com.minidoodle.mapper.TimeSlotMapper;
 import com.minidoodle.model.TimeSlot;
 import com.minidoodle.model.TimeSlotStatus;
@@ -27,22 +28,27 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     @Override
     public TimeSlotDTO createTimeSlot(TimeSlotDTO timeSlotDTO) {
+
         User user = userRepository.findById(timeSlotDTO.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + timeSlotDTO.getUserId()));
         TimeSlot timeSlot = timeSlotMapper.toEntity(timeSlotDTO, user);
+
+        if(!timeSlot.isValid()) {
+            throw new TimeSlotException("time slot start and endtime are not valid");
+        }
         TimeSlot createdTimeSlot = timeSlotRepository.save(timeSlot);
         return timeSlotMapper.toDTO(createdTimeSlot);
     }
 
     @Override
     public TimeSlotDTO updateTimeSlot(Long id, TimeSlotDTO timeSlotDTO) {
-        if (!timeSlotRepository.existsById(id)) {
-            throw new EntityNotFoundException("TimeSlot not found with id: " + id);
+        TimeSlot timeSlot = timeSlotRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("TimeSlot not found with id: " + id));
+        timeSlotMapper.updateEntity(timeSlot, timeSlotDTO, null);
+
+        if(!timeSlot.isValid()) {
+            throw new TimeSlotException("time slot start and endtime are not valid");
         }
-        User user = userRepository.findById(timeSlotDTO.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + timeSlotDTO.getUserId()));
-        TimeSlot timeSlot = timeSlotMapper.toEntity(timeSlotDTO, user);
-        timeSlot.setId(id);
         TimeSlot updatedTimeSlot = timeSlotRepository.save(timeSlot);
         return timeSlotMapper.toDTO(updatedTimeSlot);
     }

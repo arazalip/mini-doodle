@@ -2,6 +2,8 @@ package com.minidoodle.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Data
+@ToString(exclude = "calendar")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +27,8 @@ public class User {
     private String name;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Calendar calendar;
+    @EqualsAndHashCode.Exclude
+    private Calendar calendar = new Calendar(this);
 
     @OneToMany(mappedBy = "organizer")
     private Set<Meeting> organizedMeetings = new HashSet<>();

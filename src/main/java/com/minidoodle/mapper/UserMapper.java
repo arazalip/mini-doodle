@@ -2,6 +2,7 @@ package com.minidoodle.mapper;
 
 import com.minidoodle.dto.UserDTO;
 import com.minidoodle.model.User;
+import com.minidoodle.model.Calendar;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,5 +25,16 @@ public class UserMapper {
         user.setEmail(dto.getEmail());
         user.setName(dto.getName());
         return user;
+    }
+
+    public void updateEntity(User user, UserDTO dto, Calendar calendar) {
+        if (user == null || dto == null) return;
+
+        user.setEmail(dto.getEmail());
+        user.setName(dto.getName());
+
+        if (calendar != null) {
+            user.setCalendar(calendar);
+        }
     }
 } 

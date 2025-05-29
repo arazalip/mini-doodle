@@ -77,7 +77,6 @@ public class TestDataHelper {
         return meetingDTO;
     }
 
-    // Convenience methods for common test scenarios
     public static User createDefaultTestUser() {
         return createTestUser(1L, "test@example.com", "Test User");
     }

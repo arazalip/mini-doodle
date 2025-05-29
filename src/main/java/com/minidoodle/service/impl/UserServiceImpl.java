@@ -22,8 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
-        User createdUser = userRepository.save(user);
-        return userMapper.toDTO(createdUser);
+        return userMapper.toDTO(userRepository.save(user));
     }
 
     @Override
@@ -47,11 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
-        if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User not found with id: " + id);
-        }
-        User user = userMapper.toEntity(userDTO);
-        user.setId(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        userMapper.updateEntity(user, userDTO, null);
         User updatedUser = userRepository.save(user);
         return userMapper.toDTO(updatedUser);
     }

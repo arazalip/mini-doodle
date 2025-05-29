@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/meetings")
@@ -41,12 +40,6 @@ public class MeetingController {
         return ResponseEntity.ok(meetings);
     }
 
-    @GetMapping("/timeslot/{timeSlotId}")
-    public ResponseEntity<Set<MeetingDTO>> getMeetingsByTimeSlotId(@PathVariable Long timeSlotId) {
-        Set<MeetingDTO> meetings = meetingService.getMeetingsByTimeSlotId(timeSlotId);
-        return ResponseEntity.ok(meetings);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<MeetingDTO> updateMeeting(@PathVariable Long id, @Valid @RequestBody MeetingDTO meetingDTO) {
         MeetingDTO updatedMeeting = meetingService.updateMeeting(id, meetingDTO);
@@ -68,6 +61,14 @@ public class MeetingController {
     @DeleteMapping("/{meetingId}/participants/{userId}")
     public ResponseEntity<MeetingDTO> removeParticipant(@PathVariable Long meetingId, @PathVariable Long userId) {
         MeetingDTO updatedMeeting = meetingService.removeParticipant(meetingId, userId);
+        return ResponseEntity.ok(updatedMeeting);
+    }
+
+    @PostMapping("/{meetingId}/accept/{participantId}")
+    public ResponseEntity<MeetingDTO> acceptInvitation(
+            @PathVariable Long meetingId,
+            @PathVariable Long participantId) {
+        MeetingDTO updatedMeeting = meetingService.acceptInvitation(meetingId, participantId);
         return ResponseEntity.ok(updatedMeeting);
     }
 } 
