@@ -12,6 +12,7 @@ import com.minidoodle.service.TimeSlotService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +28,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     private final TimeSlotMapper timeSlotMapper;
 
     @Override
+    @Transactional
     public TimeSlotDTO createTimeSlot(TimeSlotDTO timeSlotDTO) {
 
         User user = userRepository.findById(timeSlotDTO.getUserId())
@@ -41,6 +43,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
 
     @Override
+    @Transactional
     public TimeSlotDTO updateTimeSlot(Long id, TimeSlotDTO timeSlotDTO) {
         TimeSlot timeSlot = timeSlotRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("TimeSlot not found with id: " + id));
@@ -54,6 +57,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
 
     @Override
+    @Transactional
     public void deleteTimeSlot(Long id) {
         if (!timeSlotRepository.existsById(id)) {
             throw new EntityNotFoundException("TimeSlot not found with id: " + id);
@@ -95,6 +99,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
 
     @Override
+    @Transactional
     public TimeSlotDTO markTimeSlotAsBusy(Long id) {
         TimeSlot timeSlot = timeSlotRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("TimeSlot not found with id: " + id));
@@ -104,6 +109,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
 
     @Override
+    @Transactional
     public TimeSlotDTO markTimeSlotAsAvailable(Long id) {
         TimeSlot timeSlot = timeSlotRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("TimeSlot not found with id: " + id));
@@ -113,6 +119,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
 
     @Override
+    @Transactional
     public TimeSlotDTO markTimeSlotAsBooked(Long id) {
         TimeSlot timeSlot = timeSlotRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("TimeSlot not found with id: " + id));

@@ -35,6 +35,7 @@ public class MeetingServiceImpl implements MeetingService {
     private final NotificationService notificationService;
 
     @Override
+    @Transactional
     public MeetingDTO createMeeting(MeetingDTO meetingDTO) {
         TimeSlot timeSlot = timeSlotRepository.findById(meetingDTO.getTimeSlotId())
                 .orElseThrow(() -> new EntityNotFoundException("Time slot not found with id: " + meetingDTO.getTimeSlotId()));
@@ -52,7 +53,7 @@ public class MeetingServiceImpl implements MeetingService {
         for (Long participantId : allParticipantIds) {
             bookTimeSlot(participantId, createdMeeting);
         }
-        sendNotificationsAsync(meeting);
+        sendNotificationsAsync(createdMeeting);
         return meetingMapper.toDTO(createdMeeting);
     }
 
@@ -70,6 +71,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
+    @Transactional
     public MeetingDTO updateMeeting(Long id, MeetingDTO meetingDTO) {
         Meeting meeting = meetingRepository.findById(id)
                 .orElseThrow(() ->  new EntityNotFoundException("Meeting not found with id: " + id));
@@ -98,6 +100,7 @@ public class MeetingServiceImpl implements MeetingService {
 
 
     @Override
+    @Transactional
     public void deleteMeeting(Long id) {
         Meeting meeting = meetingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Meeting not found with id: " + id));
@@ -129,25 +132,29 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public MeetingDTO addParticipant(Long meetingId, Long userId) {
+    @Transactional
+    public MeetingDTO addParticipant(Long meetingId, Long participantId) {
         Meeting meeting = meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new EntityNotFoundException("Meeting not found with id: " + meetingId));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
-        meeting.getParticipants().add(user);
-        bookTimeSlot(userId, meeting);
+        User participant = userRepository.findById(participantId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + participantId));
+
+        meeting.getParticipants().add(participant);
+        bookTimeSlot(participantId, meeting);
+
         Meeting updatedMeeting = meetingRepository.save(meeting);
         return meetingMapper.toDTO(updatedMeeting);
     }
 
     @Override
+    @Transactional
     public MeetingDTO removeParticipant(Long meetingId, Long userId) {
         Meeting meeting = meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new EntityNotFoundException("Meeting not found with id: " + meetingId));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
-        meeting.getParticipants().remove(user);
 
+        meeting.getParticipants().remove(user);
         freeMeetingTimeSlot(meetingId, user);
 
         Meeting updatedMeeting = meetingRepository.save(meeting);
@@ -167,7 +174,6 @@ public class MeetingServiceImpl implements MeetingService {
                 .orElseThrow(() -> new EntityNotFoundException("Meeting not found with id: " + meetingId));
         User participant = userRepository.findById(participantId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + participantId));
-
         if (!meeting.getParticipants().contains(participant)) {
             throw new IllegalStateException("User " + participantId + " is not a participant in meeting " + meetingId);
         }

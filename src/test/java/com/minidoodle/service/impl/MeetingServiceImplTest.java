@@ -21,8 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -80,6 +79,7 @@ class MeetingServiceImplTest {
         assertThat(result.getOrganizerId()).isEqualTo(meetingDTO.getOrganizerId());
 
         verify(meetingRepository).save(meeting);
+        verify(notificationService).sendMeetingInvitation(any(), any());
     }
 
     @Test
@@ -227,6 +227,7 @@ class MeetingServiceImplTest {
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(meetingDTO.getId());
         verify(meetingRepository).save(meeting);
+        verify(notificationService).sendMeetingInvitation(any(), any());
     }
 
     @Test

@@ -8,6 +8,7 @@ import com.minidoodle.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
+    @Transactional
     public UserDTO createUser(UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
         return userMapper.toDTO(userRepository.save(user));
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
@@ -54,6 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found with id: " + id);

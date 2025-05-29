@@ -191,7 +191,7 @@
                   "pm.test('Response has time slot data', function () {",
                   "    const response = pm.response.json();",
                   "    pm.expect(response).to.have.property('id');",
-                  "    pm.expect(response).to.have.property('calendarId');",
+                  "    pm.expect(response).to.have.property('userId');",
                   "    pm.expect(response).to.have.property('startTime');",
                   "    pm.expect(response).to.have.property('endTime');",
                   "    pm.expect(response).to.have.property('status', 'AVAILABLE');",
@@ -215,7 +215,7 @@
             "url": "{{baseUrl}}/api/timeslots",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"calendarId\": \"{{calendarId}}\",\n    \"startTime\": \"{{isoTimestamp}}\",\n    \"endTime\": \"{{isoTimestamp}}\",\n    \"status\": \"AVAILABLE\"\n}"
+              "raw": "{\n    \"userId\": \"{{userId}}\",\n    \"startTime\": \"{{isoTimestamp}}\",\n    \"endTime\": \"{{isoTimestamp}}\",\n    \"status\": \"AVAILABLE\"\n}"
             }
           }
         },
@@ -233,7 +233,7 @@
                   "pm.test('Response has time slot data', function () {",
                   "    const response = pm.response.json();",
                   "    pm.expect(response).to.have.property('id');",
-                  "    pm.expect(response).to.have.property('calendarId');",
+                  "    pm.expect(response).to.have.property('userId');",
                   "    pm.expect(response).to.have.property('startTime');",
                   "    pm.expect(response).to.have.property('endTime');",
                   "    pm.expect(response).to.have.property('status');",
@@ -249,7 +249,7 @@
           }
         },
         {
-          "name": "Get Time Slots by Calendar",
+          "name": "Get Time Slots by User",
           "event": [
             {
               "listen": "test",
@@ -270,7 +270,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/timeslots/calendar/{{calendarId}}"
+            "url": "{{baseUrl}}/api/timeslots/user/{{userId}}"
           }
         },
         {
@@ -298,7 +298,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/timeslots/available/{{calendarId}}"
+            "url": "{{baseUrl}}/api/timeslots/available/{{userId}}"
           }
         },
         {
@@ -324,7 +324,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/api/timeslots/range/{{calendarId}}?startTime={{isoTimestamp}}&endTime={{isoTimestamp}}",
+              "raw": "{{baseUrl}}/api/timeslots/range/{{userId}}?startTime={{isoTimestamp}}&endTime={{isoTimestamp}}",
               "query": [
                 {
                   "key": "startTime",
