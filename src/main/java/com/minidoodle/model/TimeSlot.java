@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.Duration;
 import java.time.Instant;
 

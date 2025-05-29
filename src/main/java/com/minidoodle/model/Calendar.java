@@ -16,7 +16,6 @@ import java.util.Set;
 @Table(name = "calendars")
 @Data
 @ToString(exclude = "user")
-@AllArgsConstructor
 @NoArgsConstructor
 public class Calendar {
 

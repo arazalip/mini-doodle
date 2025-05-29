@@ -5,13 +5,13 @@ import com.minidoodle.model.Meeting;
 import com.minidoodle.model.TimeSlot;
 import com.minidoodle.model.User;
 import org.springframework.stereotype.Component;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 public class MeetingMapper {
     public MeetingDTO toDTO(Meeting meeting) {
+
         if (meeting == null) return null;
         
         MeetingDTO dto = new MeetingDTO();
@@ -27,6 +27,7 @@ public class MeetingMapper {
     }
 
     public Meeting toEntity(MeetingDTO dto, User organizer, TimeSlot timeSlot, Set<User> participants) {
+
         if (dto == null) return null;
         
         Meeting meeting = new Meeting();

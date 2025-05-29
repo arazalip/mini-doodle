@@ -3,7 +3,6 @@ package com.minidoodle.dto;
 import com.minidoodle.model.TimeSlotStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Data
