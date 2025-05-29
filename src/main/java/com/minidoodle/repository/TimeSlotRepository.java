@@ -1,6 +1,7 @@
 package com.minidoodle.repository;
 
 import com.minidoodle.model.TimeSlot;
+import com.minidoodle.model.TimeSlotStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,9 +16,9 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
     @Query("SELECT ts FROM TimeSlot ts WHERE ts.calendar.id = :calendarId AND ts.startTime >= :startTime AND ts.endTime <= :endTime")
     List<TimeSlot> findAvailableSlotsInTimeRange(Long calendarId, Instant startTime, Instant endTime);
     
-    List<TimeSlot> findByCalendarIdAndStatus(Long calendarId, TimeSlot.TimeSlotStatus status);
+    List<TimeSlot> findByCalendarIdAndStatus(Long calendarId, TimeSlotStatus status);
     
     default List<TimeSlot> findAvailableTimeSlots(Long calendarId) {
-        return findByCalendarIdAndStatus(calendarId, TimeSlot.TimeSlotStatus.AVAILABLE);
+        return findByCalendarIdAndStatus(calendarId, TimeSlotStatus.AVAILABLE);
     }
 } 

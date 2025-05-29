@@ -1,0 +1,425 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Mini Doodle API",
+		"description": "Collection for testing Mini Doodle API endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"description": "User management endpoints",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@example.com\",\n    \"name\": \"Test User\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						},
+						"description": "Create a new user"
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "1"]
+						},
+						"description": "Get a user by their ID"
+					}
+				},
+				{
+					"name": "Get User by Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/email/test@example.com",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "email", "test@example.com"]
+						},
+						"description": "Get a user by their email"
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						},
+						"description": "Get all users"
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"updated@example.com\",\n    \"name\": \"Updated User\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "1"]
+						},
+						"description": "Update an existing user"
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "1"]
+						},
+						"description": "Delete a user"
+					}
+				}
+			]
+		},
+		{
+			"name": "TimeSlots",
+			"description": "Time slot management endpoints",
+			"item": [
+				{
+					"name": "Create TimeSlot",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calendarId\": 1,\n    \"startTime\": \"2024-03-20T10:00:00\",\n    \"endTime\": \"2024-03-20T11:00:00\",\n    \"status\": \"AVAILABLE\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots"]
+						},
+						"description": "Create a new time slot"
+					}
+				},
+				{
+					"name": "Get TimeSlot by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "1"]
+						},
+						"description": "Get a time slot by its ID"
+					}
+				},
+				{
+					"name": "Get TimeSlots by User ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "user", "1"]
+						},
+						"description": "Get all time slots for a user"
+					}
+				},
+				{
+					"name": "Get Available TimeSlots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/user/1/available",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "user", "1", "available"]
+						},
+						"description": "Get all available time slots for a user"
+					}
+				},
+				{
+					"name": "Get TimeSlots in Range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/user/1/range?startTime=2024-03-20T00:00:00&endTime=2024-03-21T00:00:00",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "user", "1", "range"],
+							"query": [
+								{
+									"key": "startTime",
+									"value": "2024-03-20T00:00:00"
+								},
+								{
+									"key": "endTime",
+									"value": "2024-03-21T00:00:00"
+								}
+							]
+						},
+						"description": "Get time slots within a date range for a user"
+					}
+				},
+				{
+					"name": "Update TimeSlot",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"calendarId\": 1,\n    \"startTime\": \"2024-03-20T14:00:00\",\n    \"endTime\": \"2024-03-20T15:00:00\",\n    \"status\": \"BUSY\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "1"]
+						},
+						"description": "Update an existing time slot"
+					}
+				},
+				{
+					"name": "Delete TimeSlot",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "1"]
+						},
+						"description": "Delete a time slot"
+					}
+				},
+				{
+					"name": "Mark TimeSlot as Busy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/1/busy",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "1", "busy"]
+						},
+						"description": "Mark a time slot as busy"
+					}
+				},
+				{
+					"name": "Mark TimeSlot as Available",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/1/available",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "1", "available"]
+						},
+						"description": "Mark a time slot as available"
+					}
+				},
+				{
+					"name": "Mark TimeSlot as Booked",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/timeslots/1/booked",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "timeslots", "1", "booked"]
+						},
+						"description": "Mark a time slot as booked"
+					}
+				}
+			]
+		},
+		{
+			"name": "Meetings",
+			"description": "Meeting management endpoints",
+			"item": [
+				{
+					"name": "Create Meeting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Team Meeting\",\n    \"description\": \"Weekly team sync\",\n    \"organizerId\": 1,\n    \"timeSlotId\": 1,\n    \"participantIds\": [2, 3]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings"]
+						},
+						"description": "Create a new meeting"
+					}
+				},
+				{
+					"name": "Get Meeting by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "1"]
+						},
+						"description": "Get a meeting by its ID"
+					}
+				},
+				{
+					"name": "Get Meetings by Organizer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/organizer/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "organizer", "1"]
+						},
+						"description": "Get all meetings organized by a user"
+					}
+				},
+				{
+					"name": "Get Meetings by Participant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/participant/2",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "participant", "2"]
+						},
+						"description": "Get all meetings where a user is a participant"
+					}
+				},
+				{
+					"name": "Get Meetings by TimeSlot",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/timeslot/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "timeslot", "1"]
+						},
+						"description": "Get all meetings for a time slot"
+					}
+				},
+				{
+					"name": "Update Meeting",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Team Meeting\",\n    \"description\": \"Updated weekly team sync\",\n    \"organizerId\": 1,\n    \"timeSlotId\": 1,\n    \"participantIds\": [2, 3, 4]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "1"]
+						},
+						"description": "Update an existing meeting"
+					}
+				},
+				{
+					"name": "Delete Meeting",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "1"]
+						},
+						"description": "Delete a meeting"
+					}
+				},
+				{
+					"name": "Add Participant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/1/participants/3",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "1", "participants", "3"]
+						},
+						"description": "Add a participant to a meeting"
+					}
+				},
+				{
+					"name": "Remove Participant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/meetings/1/participants/3",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "meetings", "1", "participants", "3"]
+						},
+						"description": "Remove a participant from a meeting"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string",
+			"description": "Base URL for the API"
+		}
+	]
+} 

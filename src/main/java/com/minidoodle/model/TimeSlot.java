@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "time_slots")
@@ -21,10 +20,10 @@ public class TimeSlot {
     private Calendar calendar;
 
     @Column(nullable = false)
-    private LocalDateTime startTime;
+    private Instant startTime;
 
     @Column(nullable = false)
-    private LocalDateTime endTime;
+    private Instant endTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -41,9 +40,4 @@ public class TimeSlot {
     @Column(nullable = false)
     private Instant updatedAt;
 
-    public enum TimeSlotStatus {
-        AVAILABLE,
-        BUSY,
-        BOOKED
-    }
-} 
+}
